@@ -20,17 +20,17 @@ It has no dependencies so it will build anywhere.
 Using a key stored in a file:
 
     fenc e file-with-key plaintext ciphertext
-		fenc d file-with-key ciphertext plaintext
+    fenc d file-with-key ciphertext plaintext
 
 Using a key on the command line:
 
     fenc e '!s00pers3kret' plaintext ciphertext
-		fenc d '!s00pers3kret' ciphertext plaintext
+    fenc d '!s00pers3kret' ciphertext plaintext
 
 Piping:
 
     cat /some/file | fenc e '!foo' >>bar
-		cat bar | fenc d '!foo' >>baz
+    cat bar | fenc d '!foo' >>baz
 
 *Warning: using a key on the command line is often unsafe since it might get saved to your history. If you do this symlink your history to /dev/null and be aware of what you are doing. But I won't stop you because I don't think you are an idiot.*
 
