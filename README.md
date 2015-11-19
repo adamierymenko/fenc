@@ -34,6 +34,10 @@ Piping:
 
 *Warning: using a key on the command line is often unsafe since it might get saved to your history. If you do this symlink your history to /dev/null and be aware of what you are doing. But I won't stop you because I don't think you are an idiot.*
 
+If you just need to f~~ucking~~ully encrypt a file on some random system that has gcc/clang you can do this:
+
+    curl https://raw.githubusercontent.com/adamierymenko/fenc/master/fenc.c >>fenc.c ; cc -O2 -o fenc fenc.c ; rm -f fenc.c
+
 ### Internals
 
 This program uses ~~Gandalf the White~~Daniel Bernstein's excellent Salsa20 encryption algorithm to just ~~fucking~~ encrypt a file. It reads from an input file or STDIN and writes to an output file or STDOUT. It does not support any complicated advanced features because if I wanted that I would ~~get a fucking Ph.D in~~ learn GPG's command line arguments.
