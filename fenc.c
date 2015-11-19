@@ -1,5 +1,19 @@
 /*
  * FENC -- A Tool to F^H^H^H^H^H^Hully Encrypt a File
+ *
+ * Sometimes you just want to f^H^H^H^H^H^Hully encrypt a file.
+ *
+ * This is a simple but very secure way to just encrypt a file at the command
+ * line. It uses DJB's excellent Salsa20 stream cipher with a 64-bit IV (so the
+ * same key is pretty safe to use multiple times) and a simple 64-bit checksum
+ * appended at the end to tell you if you got the key right.
+ *
+ * Encryption is performed using 256-bit keys computed by hashing a key of
+ * arbitrary length. Keys can be specified by a file or from the command line.
+ *
+ * Run it for usage info.
+ *
+ * See README.md for security info. License is 2-clause BSD.
  */
 
 #include <stdio.h>
@@ -151,7 +165,7 @@ int main(int argc,char **argv)
 	long n;
 	struct salsa20_ctx s20;
 
-	if ((argc <= 3)||((argv[1][0] != 'e')&&(argv[1][0] != 'd'))) {
+	if ((argc < 3)||((argv[1][0] != 'e')&&(argv[1][0] != 'd'))) {
 		printf("Usage: fenc <e|d> <keyfile|!key> [<input file>] [<output file>]\n");
 		return 1;
 	}
@@ -293,7 +307,7 @@ int main(int argc,char **argv)
 		cksum = hosttobig(cksum);
 		salsa20_encrypt_bytes(&s20,(const uint8_t *)buf2 + k,(uint8_t *)&tmpcksum,8); // Salsa20 decrypt is same as encrypt
 		if (cksum != tmpcksum) {
-			fprintf(stderr,"FATAL: decrypted input fails checksum (%.16llx != %.16llx), key likely invalid\n",cksum,tmpcksum);
+			fprintf(stderr,"FATAL: decrypted plaintext fails checksum, key is probably wrong!\n");
 			//return 3;
 		}
 	}
