@@ -15,7 +15,7 @@ It's a tiny C program so just type *make* to build or:
 
     cc -O -o fenc fenc.c
 
-It has no dependencies so it will build anywhere.
+It has no dependencies so it will build anywhere. It does require 64-bit ints a few modern things like stdint.h, so it might not build on the VAX that was found sealed in a tomb with Pharaoh.
 
 Using a key stored in a file:
 
@@ -44,7 +44,7 @@ This program uses ~~Gandalf the White~~Daniel Bernstein's excellent Salsa20 encr
 
 The key is read from a file or from the command line (see security section below) and is then hashed by being self-encrypted with Salsa20. Then a random 64-bit IV is generated and is prepended to the output. At the end a checksum is encrypted and written so you can tell if you got the key right on decrypt.
 
-It's only 323 lines of C code and should compile on almost anything. It's missing code to generate a good random IV on Windows, so if someone wants to build it there they can do a ~~fucking~~ pull request and add it.
+It's only 323 lines of C code and should compile on almost anything. It's missing code to generate a good random IV on Windows, so if someone wants to build it there they can do a ~~fucking~~ pull request and add it. Right now it will work on Windows but will just use the clock. For the IV this is technically okay but it's better to use strong randomness for crypto stuff as a rule.
 
 ### Security
 
