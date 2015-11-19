@@ -308,7 +308,7 @@ int main(int argc,char **argv)
 		salsa20_encrypt_bytes(&s20,(const uint8_t *)buf2 + k,(uint8_t *)&tmpcksum,8); // Salsa20 decrypt is same as encrypt
 		if (cksum != tmpcksum) {
 			fprintf(stderr,"FATAL: decrypted plaintext fails checksum, key is probably wrong!\n");
-			//return 3;
+			return 3;
 		}
 	}
 
