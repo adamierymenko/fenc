@@ -3,7 +3,7 @@ fenc: a utility to just f~~ucking~~ully encrypt a file
 
 **"Because sometimes you just want to f~~ucking~~ully encrypt a file."**
 
-I wrote this as a short big of rage coding because I was working on some stuff on an air gapped machine and I just wanted to f~~ucking~~ully encrypt a file with a simple passphrase to safely store it in a repo for transfer back into dangerousland.
+I wrote this in a short bout of rage coding because I was working on some stuff on an air gapped machine and I just wanted to f~~ucking~~ully encrypt a file with a simple passphrase to safely store it in a repo for transfer back into dangerousland.
 
 It turns out that f~~ucking~~ully encrypting a file from the command line is a remarkable pain. I had GPG, but I didn't want to encrypt to someone's public key with a bunch of RSA crap. I just wanted to f~~ucking~~ully encrypt a file with a simple ~~fucking~~ passphrase. You can do this with GPG but the arguments are ~~fucking~~ confusing. I used "--symmetric" and everything seemed okay but it turns out that by default this also generates a ~~fucking~~ key that I don't want and also seems to encrypt to that key and WTF and I give up ~~fuck it~~. It's also possible to ~~just encrypt a goddamn fucking file~~ with OpenSSH's command line utility but this is also confusing and when I go to decrypt it I'll probably have the key but I'll forget the exact ~~goddamn fucking~~ command line arguments I used for OpenSSH so I'll never be able to recover my ~~fucking~~ data.
 
