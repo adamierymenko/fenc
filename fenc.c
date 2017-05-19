@@ -184,7 +184,7 @@ int main(int argc,char **argv)
 			fprintf(stderr,"FATAL: unable to open %s\n",argv[2]);
 			return 2;
 		}
-		while ((n = (long)fread(buf,1,sizeof(buf),in)) > 0) {
+		while ((n = (long)fread(buf,1,sizeof(buf),in)) > 0 && !feof(in)) {
 			for(i=0;i<(unsigned long)n;++i)
 				key[i & 0x1f] ^= buf[i];
 		}
@@ -244,7 +244,7 @@ int main(int argc,char **argv)
 		salsa20_init(&s20,(const uint8_t *)key,256,(const uint8_t *)&iv);
 
 		cksum = 0;
-		while ((n = (long)fread(buf,1,sizeof(buf),in)) > 0) {
+		while ((n = (long)fread(buf,1,sizeof(buf),in)) > 0 && !feof(in)) {
 			for(i=0;i<(unsigned long)n;++i)
 				cksum += (uint64_t)buf[i];
 			salsa20_encrypt_bytes(&s20,(const uint8_t *)buf,(uint8_t *)buf,(uint32_t)n);
@@ -273,7 +273,7 @@ int main(int argc,char **argv)
 		k = 0;
 		for(;;) {
 			n = (long)fread(buf,1,sizeof(buf),in);
-			if (n <= 0)
+			if (n <= 0 || feof(in))
 				break;
 
 			if (k) {
