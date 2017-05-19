@@ -22,6 +22,8 @@
 #include <string.h>
 #include <time.h>
 
+#include "readpassphrase.h"
+
 /* Public domain Salsa20 reference code by DJB -- not fast but portable and
  * very small. */
 
@@ -161,7 +163,7 @@ int main(int argc,char **argv)
 	FILE *in,*out,*tmp;
 	char mode = 0;
 	char *ptr;
-	unsigned long i,k;
+	unsigned long i,j,k;
 	long n;
 	struct salsa20_ctx s20;
 
@@ -178,6 +180,23 @@ int main(int argc,char **argv)
 		i = 0;
 		while (*ptr)
 			key[i++ & 0x1f] ^= *(ptr++);
+	} else if (argv[2][0] == '+') {
+		if(mode == 'e') {
+reprompt:
+			while(!readpassphrase("key: ",(char *)buf,sizeof(buf),RPP_ECHO_OFF));
+			while(!readpassphrase("reenter key: ",(char *)buf2,sizeof(buf2),RPP_ECHO_OFF));
+			j = strnlen((char *)buf,sizeof(buf));
+			k = strnlen((char *)buf2,sizeof(buf2));
+			if(j != k || memcmp(buf,buf2,j))
+				goto reprompt;
+			for(i=0;i<j;++i)
+				key[i & 0x1f] ^= buf[i];
+		} else if(mode == 'd') {
+			while(!readpassphrase("key: ", (char*)buf, sizeof(buf), RPP_ECHO_OFF));
+			j = strnlen((char *)buf,sizeof(buf));
+			for(i=0;i<j;++i)
+				key[i & 0x1f] ^= buf[i];
+		}
 	} else {
 		in = fopen(argv[2],"rb");
 		if (!in) {
