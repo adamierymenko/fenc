@@ -168,7 +168,7 @@ int main(int argc,char **argv)
 	struct salsa20_ctx s20;
 
 	if ((argc < 3)||((argv[1][0] != 'e')&&(argv[1][0] != 'd'))) {
-		printf("Usage: fenc <e|d> <keyfile|!key> [<input file>] [<output file>]\n");
+		printf("Usage: fenc <e|d> <keyfile|!key|+> [<input file>] [<output file>]\n");
 		return 1;
 	}
 	mode = argv[1][0];
