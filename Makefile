@@ -1,5 +1,5 @@
 all:
-	$(CC) -Wall -O2 -o fenc fenc.c
+	$(CC) -Wall -O2 -o fenc fenc.c readpassphrase.c
 
 clean:
 	rm -f *.o fenc *.test *.test.enc *.test.dec
