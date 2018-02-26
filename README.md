@@ -51,7 +51,8 @@ Entering a key on the terminal:
     fenc e '+' plaintext ciphertext
     key:
     reenter key:
-    fenc d '+' ciphertext plaintext key:
+    fenc d '+' ciphertext plaintext
+    key:
 
 Piping:
 
@@ -64,9 +65,7 @@ because I don't think you are an idiot.*
 
 YOLO installation instructions:
 
-    curl
-    https://raw.githubusercontent.com/adamierymenko/fenc/master/fenc.c
-    >>fenc.c ; cc -O2 -o fenc fenc.c ; rm -f fenc.c
+    curl https://raw.githubusercontent.com/adamierymenko/fenc/master/fenc.c >>fenc.c ; cc -O2 -o fenc fenc.c ; rm -f fenc.c
 
 ### Internals
 
