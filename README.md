@@ -36,7 +36,8 @@ VAX that was found sealed in a tomb with Pharaoh.
 
 Using a key stored in a file:
 
-    fenc e file-with-key plaintext ciphertext fenc d file-with-key
+    fenc e file-with-key plaintext ciphertext
+    fenc d file-with-key
     ciphertext plaintext
 
 Using a key on the command line:
@@ -46,8 +47,10 @@ Using a key on the command line:
 
 Entering a key on the terminal:
 
-    fenc e '+' plaintext ciphertext key: reenter key: fenc d '+'
-    ciphertext plaintext key:
+    fenc e '+' plaintext ciphertext
+    key:
+    reenter key:
+    fenc d '+' ciphertext plaintext key:
 
 Piping:
 
