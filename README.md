@@ -67,6 +67,12 @@ YOLO installation instructions:
 
     curl https://raw.githubusercontent.com/adamierymenko/fenc/master/fenc.c >>fenc.c ; cc -O2 -o fenc fenc.c ; rm -f fenc.c
 
+### FAQ
+
+Why is encrypting and decrypting with a file not working?
+
+Try removing the newline from the end of the file.
+
 ### Internals
 
 This program uses ~~Gandalf the White~~Daniel Bernstein's excellent
