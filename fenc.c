@@ -209,7 +209,7 @@ reprompt:
 			fprintf(stderr,"FATAL: unable to open %s\n",argv[2]);
 			return 2;
 		}
-		while ((n = (long)fread(buf,1,sizeof(buf),in)) > 0 && !feof(in)) {
+		while ((n = (long)fread(buf,1,sizeof(buf),in)) > 0) {
 			for(i=0;i<(unsigned long)n;++i)
 				key[i & 0x1f] ^= buf[i];
 		}
