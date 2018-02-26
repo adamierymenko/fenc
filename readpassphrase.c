@@ -21,6 +21,8 @@
  * Materiel Command, USAF, under agreement number F39502-99-1-0512.
  */
 
+#if defined(__unix__)
+
 #include <ctype.h>
 #include <errno.h>
 #include <fcntl.h>
@@ -185,3 +187,5 @@ static void handler(int s)
 {
 	signo[s] = 1;
 }
+
+#endif

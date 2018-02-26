@@ -1,11 +1,10 @@
 all:
-	$(CC) -Wall -O2 -o fenc fenc.c readpassphrase.c
+	$(CC) -DHAS_PASSPHRASE -Wall -O2 -o fenc fenc.c readpassphrase.c
 
 clean:
 	rm -f *.o fenc *.test *.test.enc *.test.dec
 
-test:
-	$(CC) -Wall -O2 -o fenc fenc.c
+test: all
 	rm -f *.test *.test.enc *.test.dec
 	dd if=/dev/urandom of=a.test bs=1 count=1 >>/dev/null 2>&1
 	dd if=/dev/urandom of=b.test bs=64 count=1 >>/dev/null 2>&1
