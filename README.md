@@ -69,9 +69,9 @@ YOLO installation instructions:
 
 ### FAQ
 
-Why is encrypting and decrypting with a file not working?
+Why is encrypting and decrypting with a keyfile not working?
 
-Try removing the newline from the end of the file.
+Try removing the newline from the end of the keyfile.
 
 ### Internals
 
