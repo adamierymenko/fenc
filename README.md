@@ -43,8 +43,7 @@ Using a key stored in a file:
 Using a key on the command line:
 
     fenc e '!s00pers3kret' plaintext ciphertext
-    fenc d '!s00pers3kret'
-    ciphertext plaintext
+    fenc d '!s00pers3kret' ciphertext plaintext
 
 Entering a key on the terminal:
 

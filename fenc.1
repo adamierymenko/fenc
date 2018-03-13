@@ -1,0 +1,40 @@
+.Dd March 13, 2018
+.Dt FENC 1
+.Os
+
+.Sh NAME
+.Nm fenc
+.Nd fully encrypt a file
+
+.Sh SYNOPSIS
+.Nm
+.Ar e
+.Ar filename|!password|+
+.Op Ar plaintext ciphertext
+.Nm
+.Ar d
+.Ar filename|!password|+
+.Op Ar ciphertext plaintext
+
+.Sh DESCRIPTION
+.Nm
+encrypts or decrypts a file with a password. The password is supplied
+either through a file, over the command line (preceded by a !), or simply
+by being entered by the user (with +). The file is encrypted with Salsa20,
+including a 64 bit IV and a checksum.
+.Pp
+If neither input nor output are specified, the file is read from stdin and
+written to stdout.
+
+.Sh EXIT STATUS
+.Ex -std
+
+.Sh BUGS
+Cryptographically secure entropy is not yet available on windows.
+
+.Sh SEE ALSO
+.Xr gpg 1 .
+
+.Sh AUTHORS
+.An Adam Ierymenko Aq Mt adam.ierymenko@gmail.com
+.An pranomostro Aq Mt pranomostro@posteo.net
