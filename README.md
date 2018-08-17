@@ -1,5 +1,5 @@
 fenc: a utility to just f~~ucking~~ully encrypt a file
-======
+======================================================
 
 **"Because sometimes you just want to f~~ucking~~ully encrypt a file."**
 
@@ -30,9 +30,10 @@ It's a tiny C program so just type *make* to build or:
 
     cc -O -o fenc fenc.c
 
-It has no dependencies so it will build anywhere. It does require 64-bit
-ints a few modern things like stdint.h, so it might not build on the
-VAX that was found sealed in a tomb with Pharaoh.
+On windows you might need to remove `-DHAS_PASSPHRASE` from the
+Makefile. It does require 64-bit ints a few modern things like stdint.h,
+so it might not build on the VAX that was found sealed in a tomb with
+Pharaoh.
 
 Using a key stored in a file:
 
@@ -71,6 +72,11 @@ YOLO installation instructions:
 Why is encrypting and decrypting with a keyfile not working?
 
 Try removing the newline from the end of the keyfile.
+
+Why is this not building on Windows?
+
+Try removing `-DHAS_PASSPHRASE` from the Makefile. This will remove
+passphrase functionality which needs unix specific libraries.
 
 ### Internals
 
