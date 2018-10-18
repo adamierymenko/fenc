@@ -183,7 +183,7 @@ int main(int argc,char **argv)
 		while (*ptr)
 			key[i++ & 0x1f] ^= *(ptr++);
 	}
-	#if defined(__unix__)&&defined(HAS_PASSPHRASE)
+#if defined(__unix__)&&defined(HAS_PASSPHRASE)
 	else if (argv[2][0] == '+') {
 		if(mode == 'e') {
 reprompt:
@@ -202,7 +202,7 @@ reprompt:
 				key[i & 0x1f] ^= buf[i];
 		}
 	}
-	#endif
+#endif
 	else {
 		in = fopen(argv[2],"rb");
 		if (!in) {
