@@ -1,28 +1,27 @@
-fenc: a utility to just f~~ucking~~ully encrypt a file
+fenc: a utility to just fully encrypt a file
 ======================================================
 
-**"Because sometimes you just want to f~~ucking~~ully encrypt a file."**
+**"Because sometimes you just want to fully encrypt a file."**
 
 I wrote this in a short bout of rage coding because I was working on
-some stuff on an air gapped machine and I just wanted to f~~ucking~~ully
+some stuff on an air gapped machine and I just wanted to fully
 encrypt a file with a simple passphrase to safely store it in a repo
 for transfer back into dangerousland.
 
-It turns out that f~~ucking~~ully encrypting a file from the command line
-is a remarkable pain. I had GPG, but I didn't want to encrypt to someone's
-public key with a bunch of RSA crap. I just wanted to f~~ucking~~ully
-encrypt a file with a simple ~~fucking~~ passphrase. You can do this with
-GPG but the arguments are ~~fucking~~ confusing. I used "--symmetric"
-and everything seemed okay but it turns out that by default this also
-generates a ~~fucking~~ key that I don't want and also seems to encrypt to
-that key and WTF and I give up ~~fuck it~~. It's also possible to ~~just
-encrypt a goddamn fucking file~~ with OpenSSH's command line utility but
-this is also confusing and when I go to decrypt it I'll probably have the
-key but I'll forget the exact ~~goddamn fucking~~ command line arguments
-I used for OpenSSH so I'll never be able to recover my ~~fucking~~ data.
+It turns out that fully encrypting a file from the command line is a
+remarkable pain. I had GPG, but I didn't want to encrypt to someone's
+public key with a bunch of RSA crap. I just wanted to fully encrypt a file
+with a simple passphrase. You can do this with GPG but the arguments are
+confusing. I used "--symmetric" and everything seemed okay but it turns
+out that by default this also generates a key that I don't want and also
+seems to encrypt to that key and WTF and I give up . It's also possible
+to with OpenSSH's command line utility but this is also confusing and
+when I go to decrypt it I'll probably have the key but I'll forget the
+exact command line arguments I used for OpenSSH so I'll never be able
+to recover my data.
 
-All I wanted to do was to f~~ucking~~ully encrypt a file from the command
-line, so I broke down and wrote a ~~fucking~~ C program to do it.
+All I wanted to do was to fully encrypt a file from the command
+line, so I broke down and wrote a C program to do it.
 
 ### Usage
 
@@ -80,11 +79,11 @@ passphrase functionality which needs unix specific libraries.
 
 ### Internals
 
-This program uses ~~Gandalf the White~~Daniel Bernstein's excellent
-Salsa20 encryption algorithm to just ~~fucking~~ encrypt a file. It reads
+This program uses Daniel Bernstein's excellent
+Salsa20 encryption algorithm to just encrypt a file. It reads
 from an input file or STDIN and writes to an output file or STDOUT. It
 does not support any complicated advanced features because if I wanted
-that I would ~~get a fucking Ph.D in~~ learn GPG's command line arguments.
+that I would learn GPG's command line arguments.
 
 The key is read from a file, from the command line or from the terminal
 (see security section below) and is then hashed by being self-encrypted
@@ -97,7 +96,7 @@ function, which will only be compiled in if it is available.
 
 It's only 530 lines of C code and should compile on almost anything. It's
 missing code to generate a good random IV on Windows, so if someone
-wants to build it there they can do a ~~fucking~~ pull request and add
+wants to build it there they can do a pull request and add
 it. Right now it will work on Windows but will just use the clock. For
 the IV this is technically okay but it's better to use strong randomness
 for crypto stuff as a rule.
@@ -112,8 +111,7 @@ Using a simple checksum for authentication would be bad if this were a
 network protocol since it would make it vulnerable to oracle attacks,
 but this is just for simple one-off encryption of files. Brute force
 oracle attacks aren't practical here unless you're using it as part of
-some kind of interactive API that someone can hammer all day ~~in which
-case you are a dumb shit.~~
+some kind of interactive API that someone can hammer all day.
 
 A 64-bit random IV is used to make the key stream unique, so technically
 it's okay to use the same key more than once for different files. This
