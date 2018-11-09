@@ -14,7 +14,7 @@ public key with a bunch of RSA crap. I just wanted to fully encrypt a file
 with a simple passphrase. You can do this with GPG but the arguments are
 confusing. I used "--symmetric" and everything seemed okay but it turns
 out that by default this also generates a key that I don't want and also
-seems to encrypt to that key and WTF and I give up . It's also possible
+seems to encrypt to that key and WTF and I give up. It's also possible
 to with OpenSSH's command line utility but this is also confusing and
 when I go to decrypt it I'll probably have the key but I'll forget the
 exact command line arguments I used for OpenSSH so I'll never be able
