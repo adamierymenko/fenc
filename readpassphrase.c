@@ -31,6 +31,14 @@
 #include <termios.h>
 #include <unistd.h>
 
+#ifndef _NSIG
+#ifdef NSIG
+#define _NSIG NSIG
+#else
+#define _NSIG SIGRTMAX
+#endif
+#endif
+
 #include "readpassphrase.h"
 
 #ifdef TCSASOFT
