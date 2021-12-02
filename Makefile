@@ -1,11 +1,23 @@
+CC=cc
+PREFIX=/usr/local
+
 all:
-	$(CC) -Wall -O2 -o fenc fenc.c readpassphrase.c
+	$(CC) -DHAS_PASSPHRASE -Wall -O2 -o fenc fenc.c readpassphrase.c
 
 clean:
 	rm -f *.o fenc *.test *.test.enc *.test.dec
 
-test:
-	$(CC) -Wall -O2 -o fenc fenc.c
+install: all
+	mkdir -p $(PREFIX)/bin $(PREFIX)/share/man/man1
+	cp fenc $(PREFIX)/bin
+	cp fenc.1 $(PREFIX)/share/man/man1
+	chmod 755 $(PREFIX)/bin/fenc
+	chmod 644 $(PREFIX)/share/man/man1/fenc.1
+
+uninstall:
+	rm -f $(PREFIX)/bin/fenc $(PREFIX)/share/man/man1/fenc.1
+
+test: all
 	rm -f *.test *.test.enc *.test.dec
 	dd if=/dev/urandom of=a.test bs=1 count=1 >>/dev/null 2>&1
 	dd if=/dev/urandom of=b.test bs=64 count=1 >>/dev/null 2>&1
@@ -39,3 +51,5 @@ test:
 	./fenc d '!WRONG' e.test.enc e.test.dec
 	./fenc d '!WRONG' f.test.enc f.test.dec
 	rm -f *.test *.test.enc *.test.dec
+
+.PHONY: all clean install uninstall

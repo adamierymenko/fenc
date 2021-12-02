@@ -22,7 +22,9 @@
 #include <string.h>
 #include <time.h>
 
+#if defined(HAS_PASSPHRASE)
 #include "readpassphrase.h"
+#endif
 
 /* Public domain Salsa20 reference code by DJB -- not fast but portable and
  * very small. */
@@ -180,7 +182,9 @@ int main(int argc,char **argv)
 		i = 0;
 		while (*ptr)
 			key[i++ & 0x1f] ^= *(ptr++);
-	} else if (argv[2][0] == '+') {
+	}
+#if defined(__unix__)&&defined(HAS_PASSPHRASE)
+	else if (argv[2][0] == '+') {
 		if(mode == 'e') {
 reprompt:
 			while(!readpassphrase("key: ",(char *)buf,sizeof(buf),RPP_ECHO_OFF));
@@ -197,13 +201,15 @@ reprompt:
 			for(i=0;i<j;++i)
 				key[i & 0x1f] ^= buf[i];
 		}
-	} else {
+	}
+#endif
+	else {
 		in = fopen(argv[2],"rb");
 		if (!in) {
 			fprintf(stderr,"FATAL: unable to open %s\n",argv[2]);
 			return 2;
 		}
-		while ((n = (long)fread(buf,1,sizeof(buf),in)) > 0 && !feof(in)) {
+		while ((n = (long)fread(buf,1,sizeof(buf),in)) > 0) {
 			for(i=0;i<(unsigned long)n;++i)
 				key[i & 0x1f] ^= buf[i];
 		}
@@ -263,7 +269,7 @@ reprompt:
 		salsa20_init(&s20,(const uint8_t *)key,256,(const uint8_t *)&iv);
 
 		cksum = 0;
-		while ((n = (long)fread(buf,1,sizeof(buf),in)) > 0 && !feof(in)) {
+		while ((n = (long)fread(buf,1,sizeof(buf),in)) > 0) {
 			for(i=0;i<(unsigned long)n;++i)
 				cksum += (uint64_t)buf[i];
 			salsa20_encrypt_bytes(&s20,(const uint8_t *)buf,(uint8_t *)buf,(uint32_t)n);
@@ -271,6 +277,8 @@ reprompt:
 				fprintf(stderr,"FATAL: unable to write to output\n");
 				return 2;
 			}
+			if(feof(in))
+				break;
 		}
 
 		cksum = hosttobig(cksum);
@@ -292,7 +300,7 @@ reprompt:
 		k = 0;
 		for(;;) {
 			n = (long)fread(buf,1,sizeof(buf),in);
-			if (n <= 0 || feof(in))
+			if (n <= 0 && feof(in))
 				break;
 
 			if (k) {
