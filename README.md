@@ -94,12 +94,7 @@ tell if you got the key right on decrypt.
 For reading the key from the terminal it uses OpenBSD's readpassphrase()
 function, which will only be compiled in if it is available.
 
-It's only 530 lines of C code and should compile on almost anything. It's
-missing code to generate a good random IV on Windows, so if someone
-wants to build it there they can do a pull request and add
-it. Right now it will work on Windows but will just use the clock. For
-the IV this is technically okay but it's better to use strong randomness
-for crypto stuff as a rule.
+It's only 530 lines of C code and should compile on almost anything.
 
 ### Security
 
