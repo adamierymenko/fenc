@@ -26,6 +26,12 @@
 #include "readpassphrase.h"
 #endif
 
+#if defined(WIN32)||defined(_WIN32)
+#include <windows.h>
+typedef unsigned char (__stdcall *LPFN_SYSTEMFUNCTION036)(void*,unsigned long);
+LPFN_SYSTEMFUNCTION036 fnSystemFunction036 = 0;
+#endif
+
 /* Public domain Salsa20 reference code by DJB -- not fast but portable and
  * very small. */
 
@@ -123,7 +129,7 @@ static void salsa20_init(struct salsa20_ctx *x,const uint8_t *k,uint32_t kbits,c
 static void salsa20_encrypt_bytes(struct salsa20_ctx *x,const uint8_t *m,uint8_t *c,uint32_t bytes)
 {
   uint8_t output[64];
-  int i;
+  uint32_t i;
 
   if (!bytes) return;
   for (;;) {
@@ -168,6 +174,7 @@ int main(int argc,char **argv)
 	unsigned long i,j,k;
 	long n;
 	struct salsa20_ctx s20;
+	void *m;
 
 	if ((argc < 3)||((argv[1][0] != 'e')&&(argv[1][0] != 'd'))) {
 		printf("Usage: fenc <e|d> <keyfile|!key|+> [<input file>] [<output file>]\n");
@@ -182,9 +189,8 @@ int main(int argc,char **argv)
 		i = 0;
 		while (*ptr)
 			key[i++ & 0x1f] ^= *(ptr++);
-	}
+	} else if (argv[2][0] == '+') {
 #if defined(__unix__)&&defined(HAS_PASSPHRASE)
-	else if (argv[2][0] == '+') {
 		if(mode == 'e') {
 reprompt:
 			while(!readpassphrase("key: ",(char *)buf,sizeof(buf),RPP_ECHO_OFF));
@@ -201,9 +207,11 @@ reprompt:
 			for(i=0;i<j;++i)
 				key[i & 0x1f] ^= buf[i];
 		}
-	}
+#else
+		fprintf(stderr,"FATAL: PASSPHRASE (+) is not supported!\n");
+		return 2;
 #endif
-	else {
+	} else {
 		in = fopen(argv[2],"rb");
 		if (!in) {
 			fprintf(stderr,"FATAL: unable to open %s\n",argv[2]);
@@ -245,7 +253,17 @@ reprompt:
 	if (mode == 'e') {
 		iv = 0;
 #if defined(WIN32)||defined(_WIN32)
-		// TODO: entropy on Windows
+		j = 0;
+		m = LoadLibraryA("advapi32");
+		if (m) {
+			fnSystemFunction036 = (LPFN_SYSTEMFUNCTION036)GetProcAddress(m,"SystemFunction036");
+			if (fnSystemFunction036)
+				j = fnSystemFunction036((void *)&iv,sizeof(uint64_t));
+		}
+		if (!j) {
+			fprintf(stderr,"FATAL: unable to generate entropy\n");
+			return 1;
+		}
 #else
 		tmp = fopen("/dev/urandom","rb");
 		if (!tmp) {
